@@ -1,0 +1,64 @@
+{
+  "name": "@developer-overheid-nl/adr-rulesets",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "EUPL-1.2",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./rulesets": {
+      "types": "./dist/rulesets/index.d.mts",
+      "import": "./dist/rulesets/index.mjs"
+    },
+    "./rulesets/adr-20": {
+      "types": "./dist/rulesets/adr-20.d.mts",
+      "import": "./dist/rulesets/adr-20.mjs"
+    },
+    "./rulesets/adr-21": {
+      "types": "./dist/rulesets/adr-21.d.mts",
+      "import": "./dist/rulesets/adr-21.mjs"
+    },
+    "./rulesets/adr-22": {
+      "types": "./dist/rulesets/adr-22.d.mts",
+      "import": "./dist/rulesets/adr-22.mjs"
+    },
+    "./rulesets/adr-draft": {
+      "types": "./dist/rulesets/adr-draft.d.mts",
+      "import": "./dist/rulesets/adr-draft.mjs"
+    },
+    "./formats": {
+      "types": "./dist/formats.d.mts",
+      "import": "./dist/formats.mjs"
+    },
+    "./rules": {
+      "types": "./dist/rules/index.d.mts",
+      "import": "./dist/rules/index.mjs"
+    }
+  },
+  "scripts": {
+    "generate": "node scripts/generate-rulesets.mjs",
+    "build": "tsc --noEmit && tsdown",
+    "dev": "tsdown --watch",
+    "prepare": "tsdown"
+  },
+  "dependencies": {
+    "@stoplight/spectral-core": "^1.21.0",
+    "@stoplight/spectral-functions": "^1.10.1",
+    "@stoplight/spectral-rulesets": "^1.22.0"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0",
+    "tsdown": "^0.21.7",
+    "typescript": "^5.9.3"
+  }
+}
