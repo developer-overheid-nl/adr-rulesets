@@ -80,10 +80,15 @@ function formatIdentifier(name) {
 }
 
 // @stoplight/spectral-formats re-exports via tslib's __exportStar, which Node
-// cannot statically detect, so named ESM imports fail at runtime. Import the
-// CommonJS module as a whole and destructure instead.
+// cannot statically detect, so named ESM imports fail at runtime there. Bundlers
+// do detect them, and then hand back a namespace whose `default` is undefined.
+// Take the namespace and unwrap `default` only when it is there, the same way
+// ./shared does for the oas ruleset, so both loaders work.
 function formatsImport(names) {
-  return `import spectralFormats from '@stoplight/spectral-formats';\nconst { ${names.join(', ')} } = spectralFormats;`;
+  return [
+    `import * as spectralFormats from '@stoplight/spectral-formats';`,
+    `const { ${names.join(', ')} } = (spectralFormats as { default?: typeof spectralFormats }).default ?? spectralFormats;`,
+  ].join('\n');
 }
 
 function serializeFormats(value) {

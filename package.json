@@ -79,23 +79,23 @@
     "release": "pnpm build && changeset publish"
   },
   "dependencies": {
-    "@eslint/js": "^10.0.1",
     "@stoplight/spectral-core": "^1.21.0",
     "@stoplight/spectral-formats": "^1.8.2",
     "@stoplight/spectral-functions": "^1.10.1",
-    "@stoplight/spectral-rulesets": "^1.22.0",
+    "@stoplight/spectral-rulesets": "^1.22.0"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3",
+    "@eslint/js": "^10.0.1",
     "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.7",
     "globals": "^17.12.0",
-    "typescript-eslint": "^8.70.1"
-  },
-  "devDependencies": {
-    "@changesets/cli": "^3.0.3",
     "js-yaml": "^4.1.0",
     "tsdown": "^0.21.7",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.70.1"
   }
 }
