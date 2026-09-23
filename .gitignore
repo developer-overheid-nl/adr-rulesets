@@ -3,3 +3,4 @@ dist
 *.tsbuildinfo
 .claude
 test.xml
+.DS_Store

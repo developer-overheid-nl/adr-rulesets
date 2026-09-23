@@ -2,7 +2,8 @@
 // Do not edit manually. Run `pnpm generate` to update.
 
 import type { RulesetDefinition } from '@stoplight/spectral-core';
-import { oas2, oas3 } from '@stoplight/spectral-formats';
+import spectralFormats from '@stoplight/spectral-formats';
+const { oas2, oas3 } = spectralFormats;
 import { or, pattern, schema, truthy } from '@stoplight/spectral-functions';
 import { oasValidationRules } from '../rules/oas-validation';
 import { oasRuleset } from './shared';

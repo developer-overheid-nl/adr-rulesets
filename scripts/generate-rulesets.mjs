@@ -79,6 +79,13 @@ function formatIdentifier(name) {
   return name;
 }
 
+// @stoplight/spectral-formats re-exports via tslib's __exportStar, which Node
+// cannot statically detect, so named ESM imports fail at runtime. Import the
+// CommonJS module as a whole and destructure instead.
+function formatsImport(names) {
+  return `import spectralFormats from '@stoplight/spectral-formats';\nconst { ${names.join(', ')} } = spectralFormats;`;
+}
+
 function serializeFormats(value) {
   const names = Array.isArray(value) ? value : [value];
   return `[${names.map(formatIdentifier).join(', ')}]`;
@@ -321,7 +328,7 @@ function generateFutureWarningsFile(v, warnings, sourceUrls) {
   ];
   if (formats.size > 0) {
     const sorted = [...formats].sort();
-    imports.push(`import { ${sorted.join(', ')} } from '@stoplight/spectral-formats';`);
+    imports.push(formatsImport(sorted));
   }
   if (functions.size > 0) {
     const sorted = [...functions].sort();
@@ -419,7 +426,7 @@ function generateVersionTs(v, yamlContent) {
   ];
   if (formats.size > 0) {
     const sorted = [...formats].sort();
-    imports.push(`import { ${sorted.join(', ')} } from '@stoplight/spectral-formats';`);
+    imports.push(formatsImport(sorted));
   }
   if (functions.size > 0) {
     const sorted = [...functions].sort();
