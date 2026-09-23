@@ -1,6 +1,6 @@
 {
   "name": "@developer-overheid-nl/adr-rulesets",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Spectral rulesets for the NL GOV API Design Rules (ADR)",
   "packageManager": "pnpm@10.34.5",
   "type": "module",
