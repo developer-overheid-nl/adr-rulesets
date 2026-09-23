@@ -15,6 +15,13 @@ const adrDraft: RulesetDefinition = {
   formats: [oas3],
   rules: {
     ...oasValidationRules,
+    'oas3-schema': 'error',
+    'operation-operationId-unique': 'error',
+    'path-params': 'error',
+    'openapi-tags-uniqueness': 'error',
+    'oas3-valid-media-example': 'error',
+    'oas3-valid-schema-example': 'error',
+    'oas3-server-variables': 'error',
     'oas3-api-servers': 'error',
     'nlgov:openapi3': {
       severity: 'error',

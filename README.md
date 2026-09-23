@@ -51,9 +51,8 @@ pnpm build
 Releases use [changesets](https://github.com/changesets/changesets) for versioning and the changelog.
 
 1. For every user-facing change, add a changeset in the PR: `pnpm changeset` (choose patch/minor/major and describe the change).
-2. When releasing, run `pnpm version-packages`. This bumps `version` in `package.json`, writes `CHANGELOG.md` and removes the consumed changesets.
-3. Commit, then tag and push: `git tag v$(node -p "require('./package.json').version") && git push origin main --tags`.
-4. The [Publish workflow](.github/workflows/publish.yml) builds and publishes to npm with provenance. Prerelease versions (e.g. `1.0.0-beta.1`) go to the `beta` dist-tag.
+2. To release, check what version the open changesets add up to (`pnpm changeset status --verbose`), then tag the latest commit on `main` with it and push the tag: `git tag v0.1.1 && git push origin v0.1.1`.
+3. The [Publish workflow](.github/workflows/publish.yml) applies the changesets, checks that the resulting version matches the tag, builds and publishes to npm with provenance. It then commits the version bump and `CHANGELOG.md` back to `main` and moves the tag onto that commit. Prerelease versions (e.g. `1.0.0-beta.1`) go to the `beta` dist-tag.
 
 ## License
 

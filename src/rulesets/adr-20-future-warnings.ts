@@ -67,6 +67,13 @@ export const adr20FutureWarnings: Record<string, RuleDefinition | HumanReadableD
     },
     message: 'Missing fields in `info.contact` field. Must specify email, name and url. (becomes an error in ADR 2.1)',
   },
+  'oas3-schema': 'warn',
+  'operation-operationId-unique': 'warn',
+  'path-params': 'warn',
+  'openapi-tags-uniqueness': 'warn',
+  'oas3-valid-media-example': 'warn',
+  'oas3-valid-schema-example': 'warn',
+  'oas3-server-variables': 'warn',
   'path-keys-no-trailing-slash': 'warn',
   'nlgov:openapi-root-exists': {
     severity: 'warn',

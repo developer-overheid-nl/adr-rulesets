@@ -1,1 +1,1 @@
-export { oasValidationRules } from './oas-validation';
+export { oasValidationRules } from "./oas-validation";

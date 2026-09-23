@@ -12,6 +12,13 @@ const adr22: RulesetDefinition = {
   extends: [[oasRuleset as RulesetDefinition, 'off']],
   rules: {
     ...oasValidationRules,
+    'oas3-schema': 'error',
+    'operation-operationId-unique': 'error',
+    'path-params': 'error',
+    'openapi-tags-uniqueness': 'error',
+    'oas3-valid-media-example': 'error',
+    'oas3-valid-schema-example': 'error',
+    'oas3-server-variables': 'error',
     'oas3-api-servers': 'error',
     'path-keys-no-trailing-slash': 'error',
     'nlgov:openapi3': {

@@ -10,6 +10,13 @@ import type { HumanReadableDiagnosticSeverity, RuleDefinition } from '@stoplight
 import { pattern, schema, truthy } from '@stoplight/spectral-functions';
 
 export const adr21FutureWarnings: Record<string, RuleDefinition | HumanReadableDiagnosticSeverity> = {
+  'oas3-schema': 'warn',
+  'operation-operationId-unique': 'warn',
+  'path-params': 'warn',
+  'openapi-tags-uniqueness': 'warn',
+  'oas3-valid-media-example': 'warn',
+  'oas3-valid-schema-example': 'warn',
+  'oas3-server-variables': 'warn',
   'path-keys-no-trailing-slash': 'warn',
   'nlgov:openapi-root-exists': {
     severity: 'warn',
