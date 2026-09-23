@@ -60,6 +60,30 @@ const KNOWN_FUNCTIONS = new Set([
   'unreferencedReusableObject', 'xor',
 ]);
 
+// Format names Spectral resolves for YAML/JSON rulesets. In a JS ruleset the
+// `formats` entries have to be the actual Format functions, so we emit them as
+// identifiers imported from @stoplight/spectral-formats.
+const KNOWN_FORMATS = new Set([
+  'oas2', 'oas3', 'oas3_0', 'oas3_1',
+  'aas2', 'aas3', 'asyncApi2', 'asyncapi2',
+  'aas2_0', 'aas2_1', 'aas2_2', 'aas2_3', 'aas2_4', 'aas2_5', 'aas2_6', 'aas3_0',
+  'jsonSchema', 'jsonSchemaLoose', 'jsonSchemaDraft4', 'jsonSchemaDraft6',
+  'jsonSchemaDraft7', 'jsonSchemaDraft2019_09', 'jsonSchemaDraft2020_12',
+  'arazzo1_0',
+]);
+
+function formatIdentifier(name) {
+  if (typeof name !== 'string' || !KNOWN_FORMATS.has(name)) {
+    throw new Error(`Unknown format \`${name}\`; add it to KNOWN_FORMATS if @stoplight/spectral-formats exports it`);
+  }
+  return name;
+}
+
+function serializeFormats(value) {
+  const names = Array.isArray(value) ? value : [value];
+  return `[${names.map(formatIdentifier).join(', ')}]`;
+}
+
 function escapeString(str) {
   return str
     .replace(/\\/g, '\\\\')
@@ -82,6 +106,10 @@ function serializeValue(value, indent, propertyName) {
 
   if (propertyName === 'function' && typeof value === 'string' && KNOWN_FUNCTIONS.has(value)) {
     return value;
+  }
+
+  if (propertyName === 'formats') {
+    return serializeFormats(value);
   }
 
   if (typeof value === 'string') {
@@ -112,6 +140,24 @@ function serializeValue(value, indent, propertyName) {
   }
 
   return String(value);
+}
+
+function collectFormats(obj, formats) {
+  if (typeof obj !== 'object' || obj === null) return;
+
+  if (Array.isArray(obj)) {
+    obj.forEach(item => collectFormats(item, formats));
+    return;
+  }
+
+  for (const [key, value] of Object.entries(obj)) {
+    if (key === 'formats') {
+      const names = Array.isArray(value) ? value : [value];
+      names.forEach(name => formats.add(formatIdentifier(name)));
+    } else {
+      collectFormats(value, formats);
+    }
+  }
 }
 
 function collectFunctions(obj, functions) {
@@ -253,9 +299,11 @@ function computeFutureWarnings(currentVersion, allVersions, parsedRulesByVersion
 
 function generateFutureWarningsFile(v, warnings, sourceUrls) {
   const functions = new Set();
+  const formats = new Set();
   for (const rule of Object.values(warnings)) {
     if (typeof rule === 'object' && rule !== null) {
       collectFunctions(rule, functions);
+      collectFormats(rule, formats);
     }
   }
 
@@ -271,6 +319,10 @@ function generateFutureWarningsFile(v, warnings, sourceUrls) {
   const imports = [
     `import type { HumanReadableDiagnosticSeverity, RuleDefinition } from '@stoplight/spectral-core';`,
   ];
+  if (formats.size > 0) {
+    const sorted = [...formats].sort();
+    imports.push(`import { ${sorted.join(', ')} } from '@stoplight/spectral-formats';`);
+  }
   if (functions.size > 0) {
     const sorted = [...functions].sort();
     imports.push(`import { ${sorted.join(', ')} } from '@stoplight/spectral-functions';`);
@@ -332,10 +384,17 @@ function generateVersionTs(v, yamlContent) {
   const extendsExpr = serializeExtends(parsed.extends);
 
   const functions = new Set();
+  const formats = new Set();
   for (const rule of Object.values(rules)) {
     if (typeof rule === 'object' && rule !== null) {
       collectFunctions(rule, functions);
+      collectFormats(rule, formats);
     }
+  }
+  // A ruleset-level `formats` scopes every rule that doesn't override it.
+  const rulesetFormats = parsed.formats;
+  if (rulesetFormats !== undefined && rulesetFormats !== null) {
+    collectFormats({ formats: rulesetFormats }, formats);
   }
 
   const oasValNames = getOasValidationRuleNames();
@@ -358,6 +417,10 @@ function generateVersionTs(v, yamlContent) {
   const imports = [
     `import type { RulesetDefinition } from '@stoplight/spectral-core';`,
   ];
+  if (formats.size > 0) {
+    const sorted = [...formats].sort();
+    imports.push(`import { ${sorted.join(', ')} } from '@stoplight/spectral-formats';`);
+  }
   if (functions.size > 0) {
     const sorted = [...functions].sort();
     imports.push(`import { ${sorted.join(', ')} } from '@stoplight/spectral-functions';`);
@@ -369,6 +432,11 @@ function generateVersionTs(v, yamlContent) {
   }
   imports.push(`import { oasRuleset } from './shared';`);
 
+  const rulesetFormatsLine =
+    rulesetFormats === undefined || rulesetFormats === null
+      ? ''
+      : `\n  formats: ${serializeFormats(rulesetFormats)},`;
+
   return `// Auto-generated from ${v.url}
 // Do not edit manually. Run \`pnpm generate\` to update.
 
@@ -377,7 +445,7 @@ ${imports.join('\n')}
 export const ${v.constName} = '${v.uri}';
 
 const ${v.varName}: RulesetDefinition = {
-  extends: ${extendsExpr},
+  extends: ${extendsExpr},${rulesetFormatsLine}
   rules: {
 ${ruleLines.join('\n')}
   },

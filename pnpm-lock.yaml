@@ -11,6 +11,9 @@ importers:
       '@stoplight/spectral-core':
         specifier: ^1.21.0
         version: 1.21.0
+      '@stoplight/spectral-formats':
+        specifier: ^1.8.2
+        version: 1.8.2
       '@stoplight/spectral-functions':
         specifier: ^1.10.1
         version: 1.10.1

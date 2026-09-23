@@ -2,6 +2,7 @@
 // Do not edit manually. Run `pnpm generate` to update.
 
 import type { RulesetDefinition } from '@stoplight/spectral-core';
+import { oas2, oas3 } from '@stoplight/spectral-formats';
 import { or, pattern, schema, truthy } from '@stoplight/spectral-functions';
 import { oasValidationRules } from '../rules/oas-validation';
 import { oasRuleset } from './shared';
@@ -10,6 +11,7 @@ export const ADR_DRAFT_URI = 'https://logius-standaarden.github.io/API-Design-Ru
 
 const adrDraft: RulesetDefinition = {
   extends: [[oasRuleset as RulesetDefinition, 'off']],
+  formats: [oas3],
   rules: {
     ...oasValidationRules,
     'oas3-api-servers': 'error',
@@ -32,7 +34,7 @@ const adrDraft: RulesetDefinition = {
         function: truthy,
       },
       message: 'The root of the document must contain the `openapi` property.',
-      formats: ['oas2'],
+      formats: [oas2],
     },
     'nlgov:missing-version-header': {
       severity: 'error',
