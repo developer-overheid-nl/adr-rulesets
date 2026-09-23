@@ -2,6 +2,7 @@ import type { RulesetDefinition } from '@stoplight/spectral-core';
 import { or, pattern, schema, truthy } from '@stoplight/spectral-functions';
 import { oas3_0, oas3_1 } from '../formats';
 import { oasValidationRules } from '../rules/oas-validation';
+import { adr20FutureWarnings } from './adr-20-future-warnings';
 import { oasRuleset } from './shared';
 
 export const ADR_20_URI = 'https://logius-standaarden.github.io/API-Design-Rules/2.0';
@@ -12,6 +13,7 @@ const adr20: RulesetDefinition = {
   formats: [oas3_0, oas3_1],
   rules: {
     ...oasValidationRules,
+    ...adr20FutureWarnings,
     // /core/version-header
     'missing-version-header': {
       severity: 'error',

@@ -3,35 +3,30 @@
 
 import type { RulesetDefinition } from '@stoplight/spectral-core';
 import { casing, or, pattern, schema, truthy } from '@stoplight/spectral-functions';
+import { oasValidationRules } from '../rules/oas-validation';
+import { adr21FutureWarnings } from './adr-21-future-warnings';
 import { oasRuleset } from './shared';
 
-export const ADR_21_URI = 'https://logius-standaarden.github.io/API-Design-Rules/2.1';
+export const ADR_21_URI = 'https://gitdocumentatie.logius.nl/publicatie/api/adr/2.1.0';
 
 const adr21: RulesetDefinition = {
   extends: [oasRuleset],
   rules: {
+    ...adr21FutureWarnings,
+    ...oasValidationRules,
     'oas3-api-servers': 'error',
-    'nlgov:openapi3': {
+    openapi3: {
       severity: 'error',
-      given: '$.[\'openapi\']',
+      given: ['$.[\'openapi\']'],
       then: {
         function: pattern,
         functionOptions: {
-          match: '^3(.\\d+){1,2}$',
+          match: '^3.0.*$',
         },
       },
-      message: 'The OpenAPI Specification is versioned using a `major.minor.patch` versioning scheme. Use a version 3 OpenAPI Specification for documentation.',
+      message: 'Use OpenAPI Specification for documentation',
     },
-    'nlgov:openapi-root-exists': {
-      severity: 'error',
-      given: '$',
-      then: {
-        field: 'openapi',
-        function: truthy,
-      },
-      message: 'The root of the document must contain the `openapi` property.',
-    },
-    'nlgov:missing-version-header': {
+    'missing-version-header': {
       severity: 'error',
       given: '$..[responses][?(@property && @property.match(/(2|3)\\d\\d/))][headers]',
       then: {
@@ -40,20 +35,18 @@ const adr21: RulesetDefinition = {
           properties: ['API-Version', 'Api-Version', 'Api-version', 'api-version', 'API-version'],
         },
       },
-      message: 'Return the full version number in a response header.',
-      documentationUrl: 'https://developer.overheid.nl/kennisbank/apis/api-design-rules/hoe-te-voldoen/version-header',
+      message: 'Return the full version number in a response header',
     },
-    'nlgov:missing-header': {
+    'missing-header': {
       severity: 'error',
       given: '$..[responses][?(@property && @property.match(/(2|3)\\d\\d/))]',
       then: {
         field: 'headers',
         function: truthy,
       },
-      message: 'Return the full version number in a response header.',
-      documentationUrl: 'https://developer.overheid.nl/kennisbank/apis/api-design-rules/hoe-te-voldoen/version-header',
+      message: '/core/version-header: Return the full version number in a response header: https://logius-standaarden.github.io/API-Design-Rules/#/core/version-header',
     },
-    'nlgov:include-major-version-in-uri': {
+    'include-major-version-in-uri': {
       severity: 'error',
       given: ['$.servers[*]'],
       then: {
@@ -63,10 +56,9 @@ const adr21: RulesetDefinition = {
         },
         field: 'url',
       },
-      message: 'Include the major version number in the URI.',
-      documentationUrl: 'https://developer.overheid.nl/kennisbank/apis/api-design-rules/hoe-te-voldoen/uri-version',
+      message: '/core/uri-version: Include the major version number in the URI: https://logius-standaarden.github.io/API-Design-Rules/#/core/uri-version',
     },
-    'nlgov:paths-no-trailing-slash': {
+    'paths-no-trailing-slash': {
       severity: 'error',
       given: ['$.paths'],
       then: {
@@ -76,20 +68,40 @@ const adr21: RulesetDefinition = {
         },
         field: '@key',
       },
-      message: 'Leave off trailing slashes from URIs.',
-      documentationUrl: 'https://developer.overheid.nl/kennisbank/apis/api-design-rules/hoe-te-voldoen/no-trailing-slash',
+      message: '/core/no-trailing-slash: Leave off trailing slashes from URIs: https://logius-standaarden.github.io/API-Design-Rules/#/core/no-trailing-slash',
     },
-    'info-contact': {
+    'paths-open-api-json-resource-exists': {
       severity: 'error',
-      given: ['$'],
+      given: ['$.paths'],
       then: {
-        field: 'info.contact',
         function: truthy,
+        field: '/openapi.json',
       },
-      message: 'Info object must have "contact" object.',
-      documentationUrl: 'https://developer.overheid.nl/kennisbank/apis/api-design-rules/hoe-te-voldoen/doc-openapi-contact',
+      message: 'There does not exist a resource `/openapi.json` that returns the OpenAPI specification document',
     },
-    'nlgov:info-contact-fields-exist': {
+    'paths-open-api-json-resource-has-get': {
+      severity: 'error',
+      given: ['$.paths[/openapi.json]'],
+      then: {
+        function: pattern,
+        functionOptions: {
+          match: 'get',
+        },
+        field: '@key',
+      },
+      message: 'There does not exist a GET method (and no other methods) for the `/openapi.json` resource',
+    },
+    'paths-open-api-json-specify-cors-header': {
+      severity: 'error',
+      given: ['$.paths[/openapi.json].get.responses[?(@property && @property.match(/(2|3)\\d\\d/))].headers'],
+      then: {
+        function: truthy,
+        field: 'access-control-allow-origin',
+      },
+      message: 'The response of the `/openapi.json` resource should set the `access-control-allow-origin` header with value `*`',
+    },
+    'info-contact': 'error',
+    'info-contact-fields-exist': {
       severity: 'error',
       given: ['$.info.contact'],
       then: {
@@ -101,9 +113,8 @@ const adr21: RulesetDefinition = {
         },
       },
       message: 'Missing fields in `info.contact` field. Must specify email, name and url.',
-      documentationUrl: 'https://developer.overheid.nl/kennisbank/apis/api-design-rules/hoe-te-voldoen/doc-openapi-contact',
     },
-    'nlgov:http-methods': {
+    'http-methods': {
       severity: 'error',
       given: ['$.paths[?(@property && @property.match(/(description|summary)/i))]'],
       then: {
@@ -113,11 +124,10 @@ const adr21: RulesetDefinition = {
         },
         field: '@key',
       },
-      message: 'Only apply standard HTTP methods.',
-      documentationUrl: 'https://developer.overheid.nl/kennisbank/apis/api-design-rules/hoe-te-voldoen/http-methods',
+      message: '/core/http-methods: Only apply standard HTTP methods: https://logius-standaarden.github.io/API-Design-Rules/#http-methods',
     },
-    'nlgov:paths-kebab-case': {
-      severity: 'error',
+    'paths-kebab-case': {
+      severity: 'warn',
       message: '{{property}} is not kebab-case.',
       given: '$.paths[?(@property && !@property.match(/\\/openapi\\.json/))]~',
       then: {
@@ -127,21 +137,9 @@ const adr21: RulesetDefinition = {
         },
       },
     },
-    'nlgov:query-keys-camel-case': {
-      severity: 'error',
-      message: '{{value}} is not lower camelCase.',
-      given: ['$.paths.*.*.parameters[?(@.in==\'query\')]', '$.components.securitySchemes[?(@.in==\'query\')]'],
-      then: {
-        function: pattern,
-        field: 'name',
-        functionOptions: {
-          match: '^\\$?[a-z][a-z\\d]*([A-Z][a-z\\d]*)*$',
-        },
-      },
-    },
-    'nlgov:schema-camel-case': {
+    'schema-camel-case': {
       severity: 'warn',
-      message: 'Schema name should be UpperCamelCase in {{path}}',
+      message: 'Schema name should be CamelCase in {{path}}',
       given: '$.components.schemas[*]~',
       then: {
         function: casing,
@@ -153,7 +151,7 @@ const adr21: RulesetDefinition = {
         },
       },
     },
-    'nlgov:servers-use-https': {
+    'servers-use-https': {
       severity: 'warn',
       message: 'Server URL {{value}} {{error}}.',
       given: ['$.servers[*]', '$.paths..servers[*]'],
@@ -165,7 +163,7 @@ const adr21: RulesetDefinition = {
         },
       },
     },
-    'nlgov:use-problem-schema': {
+    'use-problem-schema': {
       severity: 'warn',
       message: 'The content type of an error response should be application/problem+json or application/problem+xml to match RFC 9457.',
       given: '$..[responses][?(@property && @property.match(/(4|5)\\d\\d/))].content',
@@ -185,7 +183,7 @@ const adr21: RulesetDefinition = {
         },
       },
     },
-    'nlgov:property-casing': {
+    'property-casing': {
       severity: 'warn',
       given: ['$.*.schemas[*].properties.[?(@property && @property.match(/_links/i))]'],
       then: {
@@ -196,17 +194,6 @@ const adr21: RulesetDefinition = {
         field: '@key',
       },
       message: 'Properties must be lowerCamelCase.',
-    },
-    'nlgov:semver': {
-      severity: 'error',
-      message: 'Version {{value}} is not in semver format.',
-      given: '$.info.version',
-      then: {
-        function: pattern,
-        functionOptions: {
-          match: '^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$',
-        },
-      },
     },
   },
 };
