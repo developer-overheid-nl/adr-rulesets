@@ -2,14 +2,18 @@
 // Do not edit manually. Run `pnpm generate` to update.
 
 import type { RulesetDefinition } from '@stoplight/spectral-core';
-import { casing, or, pattern, schema, truthy } from '@stoplight/spectral-functions';
+import { oas2, oas3 } from '@stoplight/spectral-formats';
+import { or, pattern, schema, truthy } from '@stoplight/spectral-functions';
+import { oasValidationRules } from '../rules/oas-validation';
 import { oasRuleset } from './shared';
 
 export const ADR_DRAFT_URI = 'https://logius-standaarden.github.io/API-Design-Rules';
 
 const adrDraft: RulesetDefinition = {
-  extends: [oasRuleset],
+  extends: [[oasRuleset as RulesetDefinition, 'off']],
+  formats: [oas3],
   rules: {
+    ...oasValidationRules,
     'oas3-api-servers': 'error',
     'nlgov:openapi3': {
       severity: 'error',
@@ -30,6 +34,7 @@ const adrDraft: RulesetDefinition = {
         function: truthy,
       },
       message: 'The root of the document must contain the `openapi` property.',
+      formats: [oas2],
     },
     'nlgov:missing-version-header': {
       severity: 'error',
@@ -72,7 +77,7 @@ const adrDraft: RulesetDefinition = {
       then: {
         function: pattern,
         functionOptions: {
-          notMatch: '.+ \\/$',
+          notMatch: '.+\\/$',
         },
         field: '@key',
       },
@@ -119,7 +124,7 @@ const adrDraft: RulesetDefinition = {
     'nlgov:paths-kebab-case': {
       severity: 'error',
       message: '{{property}} is not kebab-case.',
-      given: '$.paths[?(@property && !@property.match(/\\/openapi\\.json/))]~',
+      given: '$.paths[?(@property && !@property.match(/\\/openapi\\.(json)|(yaml)/))]~',
       then: {
         function: pattern,
         functionOptions: {
@@ -139,29 +144,15 @@ const adrDraft: RulesetDefinition = {
         },
       },
     },
-    'nlgov:schema-camel-case': {
-      severity: 'warn',
-      message: 'Schema name should be UpperCamelCase in {{path}}',
-      given: '$.components.schemas[*]~',
-      then: {
-        function: casing,
-        functionOptions: {
-          type: 'pascal',
-          separator: {
-            char: '',
-          },
-        },
-      },
-    },
     'nlgov:servers-use-https': {
-      severity: 'warn',
+      severity: 'error',
       message: 'Server URL {{value}} {{error}}.',
       given: ['$.servers[*]', '$.paths..servers[*]'],
       then: {
         field: 'url',
         function: pattern,
         functionOptions: {
-          match: '^https://.*',
+          notMatch: '^http://.*',
         },
       },
     },
@@ -204,22 +195,29 @@ const adrDraft: RulesetDefinition = {
         },
       },
     },
-    'nlgov:property-casing': {
-      severity: 'warn',
-      given: ['$.*.schemas[*].properties.[?(@property && @property.match(/_links/i))]'],
+    'nlgov:problem-invalid-input': {
+      severity: 'error',
+      message: 'GET and DELETE endpoints that have parameters, and all other endpoints must be able to return a 400 response',
+      given: ['$.paths..[?( @property.match(/(get)|(delete)/) && @.parameters && @.parameters.length > 0 )]', '$.paths..[?( @property.match(/(put)|(post)|(patch)/))]'],
       then: {
-        function: casing,
+        function: schema,
         functionOptions: {
-          type: 'camel',
+          schema: {
+            type: 'object',
+            properties: {
+              responses: {
+                type: 'object',
+                required: ['400'],
+              },
+            },
+          },
         },
-        field: '@key',
       },
-      message: 'Properties must be lowerCamelCase.',
     },
     'nlgov:date-time-ensure-timezone': {
       severity: 'error',
       given: '$..properties[*].format',
-      message: 'Use date-time format which includes a timezone',
+      message: 'Use date-time format which includes a time zone',
       then: {
         function: pattern,
         functionOptions: {
@@ -230,7 +228,7 @@ const adrDraft: RulesetDefinition = {
     'nlgov:time-without-timezone': {
       severity: 'error',
       given: '$..properties[*].format',
-      message: 'Use time-local format without a timezone',
+      message: 'Use time-local format without a time zone',
       then: {
         function: pattern,
         functionOptions: {
