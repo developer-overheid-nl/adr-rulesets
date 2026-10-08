@@ -35,7 +35,12 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: pnpm install --frozen-lockfile
       - name: Apply changesets
-        run: pnpm changeset version
+        # A release commit on main may already have applied them; `changeset version`
+        # exits 1 when there are none, so only run it when changesets are pending.
+        run: |
+          if find .changeset -name '*.md' ! -name README.md | grep -q .; then
+            pnpm changeset version
+          fi
       - name: Verify version matches tag
         run: |
           TAG=${GITHUB_REF_NAME#v}
