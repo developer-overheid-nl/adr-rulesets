@@ -1,5 +1,34 @@
 # @developer-overheid-nl/adr-rulesets
 
+## 0.1.1
+
+Version 0.1.0 was published to npm earlier and then unpublished, so it can no longer be used; this is the
+first 0.1 release.
+
+### Minor Changes
+
+- 98f3f3b: Add `adrVersions`: the list of ADR versions this package ships (`2.0.2`, `2.1.0`, `2.2.0` and the
+  `werkversie` draft), ordered oldest → newest, each with its `id`, `status` (`final` or `draft`), `uri`
+  and `ruleset`. Consumers such as don-checker and don-tools can derive their versions from it instead of
+  maintaining their own list. Available from the package root and from `@developer-overheid-nl/adr-rulesets/versions`.
+
+## 0.0.2
+
+### Patch Changes
+
+- a24e73c: Fix loading the `adrDraft` ruleset under bundlers. `@stoplight/spectral-formats` is CommonJS: Node
+  cannot detect its named exports, but esbuild/Vite can — and then hand back a namespace whose
+  `default` is undefined, so `import spectralFormats from '...'` followed by destructuring threw
+  `TypeError: Cannot destructure property 'oas2' of 'default' as it is undefined`. The generator now
+  imports the namespace and unwraps `default` only when it is present, the same way `./shared` already
+  does for the oas ruleset, so both loaders work.
+  
+  Move the ESLint toolchain (`eslint`, `typescript-eslint`, `@eslint/js`, `globals`,
+  `eslint-config-prettier`, `eslint-plugin-prettier`, `eslint-plugin-react-hooks`,
+  `eslint-plugin-react-refresh`) from `dependencies` to `devDependencies`. It is only needed to lint
+  this repository, so consumers no longer install it. Only the four `@stoplight/spectral-*` packages
+  the rulesets actually import remain runtime dependencies.
+
 ## 0.0.1
 
 ### Patch Changes
