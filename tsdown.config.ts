@@ -4,6 +4,7 @@ export default defineConfig({
   entry: [
     "src/index.ts",
     "src/formats.ts",
+    "src/versions.ts",
     "src/rules/index.ts",
     "src/rulesets/index.ts",
     "src/rulesets/adr-20.ts",

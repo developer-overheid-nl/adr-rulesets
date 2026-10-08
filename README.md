@@ -35,8 +35,21 @@ Each ruleset module also exports its URI (`ADR_20_URI`, `ADR_21_URI`, …).
 Older versions (`adr20`, `adr21`) also report rules that are errors in a newer
 ADR version as warnings, so you get notice before they become hard errors.
 
-Older versions (`adr20`, `adr21`) also report rules that are errors in a newer
-ADR version as warnings, so you get notice before they become hard errors.
+### Versions
+
+`adrVersions` lists every ADR version this package ships, ordered oldest → newest, so consumers
+do not have to maintain their own list:
+
+```ts
+import { adrVersions } from '@developer-overheid-nl/adr-rulesets/versions';
+
+// [{ id: '2.0.2', status: 'final', uri: ADR_20_URI, ruleset: adr20 }, …,
+//  { id: 'werkversie', status: 'draft', uri: ADR_DRAFT_URI, ruleset: adrDraft }]
+const latestFinal = adrVersions.findLast(version => version.status === 'final');
+```
+
+It is also exported from the package root, together with the `AdrVersion`, `AdrVersionId` and
+`AdrVersionStatus` types.
 
 ## Development
 
