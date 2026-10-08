@@ -58,6 +58,10 @@
       "types": "./dist/rulesets/adr-draft.d.mts",
       "import": "./dist/rulesets/adr-draft.mjs"
     },
+    "./versions": {
+      "types": "./dist/versions.d.mts",
+      "import": "./dist/versions.mjs"
+    },
     "./formats": {
       "types": "./dist/formats.d.mts",
       "import": "./dist/formats.mjs"

@@ -8,5 +8,7 @@ export {
   adrDraft,
   ADR_DRAFT_URI,
 } from "./rulesets";
+export { adrVersions } from "./versions";
+export type { AdrVersion, AdrVersionId, AdrVersionStatus } from "./versions";
 export { oas3_0, oas3_1 } from "./formats";
 export { oasValidationRules } from "./rules";
