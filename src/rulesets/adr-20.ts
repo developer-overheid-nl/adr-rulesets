@@ -1,5 +1,5 @@
-import type { RulesetDefinition } from '@stoplight/spectral-core';
-import { or, pattern, schema, truthy } from '@stoplight/spectral-functions';
+import type { RulesetDefinition } from '@openlint/openlint-core';
+import { or, pattern, schema, truthy } from '@openlint/openlint-functions';
 import { oas3_0, oas3_1 } from '../formats';
 import { oasValidationRules } from '../rules/oas-validation';
 import { adr20FutureWarnings } from './adr-20-future-warnings';

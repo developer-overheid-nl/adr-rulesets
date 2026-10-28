@@ -7,8 +7,8 @@
 //   - https://gitdocumentatie.logius.nl/publicatie/api/adr/2.1.0/media/linter.yaml
 //   - https://gitdocumentatie.logius.nl/publicatie/api/adr/2.2.0/media/linter.yaml
 
-import type { HumanReadableDiagnosticSeverity, RuleDefinition } from '@stoplight/spectral-core';
-import { pattern, schema, truthy } from '@stoplight/spectral-functions';
+import type { HumanReadableDiagnosticSeverity, RuleDefinition } from '@openlint/openlint-core';
+import { pattern, schema, truthy } from '@openlint/openlint-functions';
 
 export const adr20FutureWarnings: Record<string, RuleDefinition | HumanReadableDiagnosticSeverity> = {
   'oas3-api-servers': 'warn',

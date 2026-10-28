@@ -17,9 +17,4 @@ export default defineConfig({
   dts: true,
   clean: true,
   sourcemap: true,
-  external: [
-    "@stoplight/spectral-core",
-    "@stoplight/spectral-functions",
-    "@stoplight/spectral-rulesets",
-  ],
 });

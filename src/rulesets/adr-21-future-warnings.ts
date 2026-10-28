@@ -6,8 +6,8 @@
 // error in a future version. Source rulesets:
 //   - https://gitdocumentatie.logius.nl/publicatie/api/adr/2.2.0/media/linter.yaml
 
-import type { HumanReadableDiagnosticSeverity, RuleDefinition } from '@stoplight/spectral-core';
-import { pattern, schema, truthy } from '@stoplight/spectral-functions';
+import type { HumanReadableDiagnosticSeverity, RuleDefinition } from '@openlint/openlint-core';
+import { pattern, schema, truthy } from '@openlint/openlint-functions';
 
 export const adr21FutureWarnings: Record<string, RuleDefinition | HumanReadableDiagnosticSeverity> = {
   'oas3-schema': 'warn',
