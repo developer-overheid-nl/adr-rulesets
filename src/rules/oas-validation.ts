@@ -1,4 +1,4 @@
-import type { HumanReadableDiagnosticSeverity } from "@stoplight/spectral-core";
+import type { HumanReadableDiagnosticSeverity } from "@openlint/openlint-core";
 
 // Baseline OpenAPI validation rules that should be hard errors in every ADR
 // ruleset, regardless of the version's `extends:` strategy.

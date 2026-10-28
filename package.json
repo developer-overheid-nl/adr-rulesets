@@ -1,7 +1,7 @@
 {
   "name": "@developer-overheid-nl/adr-rulesets",
   "version": "0.1.1",
-  "description": "Spectral rulesets for the NL GOV API Design Rules (ADR)",
+  "description": "OpenLint (Spectral-compatible) rulesets for the NL GOV API Design Rules (ADR)",
   "packageManager": "pnpm@10.34.5",
   "type": "module",
   "license": "EUPL-1.2",
@@ -14,6 +14,7 @@
     "url": "https://github.com/developer-overheid-nl/adr-rulesets/issues"
   },
   "keywords": [
+    "openlint",
     "spectral",
     "openapi",
     "api-design-rules",
@@ -22,7 +23,7 @@
     "linter"
   ],
   "engines": {
-    "node": ">=20"
+    "node": "^22.0 || >=24.0"
   },
   "publishConfig": {
     "access": "public"
@@ -83,10 +84,10 @@
     "release": "pnpm build && changeset publish"
   },
   "dependencies": {
-    "@stoplight/spectral-core": "^1.21.0",
-    "@stoplight/spectral-formats": "^1.8.2",
-    "@stoplight/spectral-functions": "^1.10.1",
-    "@stoplight/spectral-rulesets": "^1.22.0"
+    "@openlint/openlint-core": "^0.1.1",
+    "@openlint/openlint-formats": "^0.1.0",
+    "@openlint/openlint-functions": "^0.1.0",
+    "@openlint/openlint-rulesets": "^0.1.0"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",

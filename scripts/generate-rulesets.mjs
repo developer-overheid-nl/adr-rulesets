@@ -60,9 +60,9 @@ const KNOWN_FUNCTIONS = new Set([
   'unreferencedReusableObject', 'xor',
 ]);
 
-// Format names Spectral resolves for YAML/JSON rulesets. In a JS ruleset the
+// Format names OpenLint (like Spectral) resolves for YAML/JSON rulesets. In a JS ruleset the
 // `formats` entries have to be the actual Format functions, so we emit them as
-// identifiers imported from @stoplight/spectral-formats.
+// identifiers imported from @openlint/openlint-formats.
 const KNOWN_FORMATS = new Set([
   'oas2', 'oas3', 'oas3_0', 'oas3_1',
   'aas2', 'aas3', 'asyncApi2', 'asyncapi2',
@@ -74,20 +74,20 @@ const KNOWN_FORMATS = new Set([
 
 function formatIdentifier(name) {
   if (typeof name !== 'string' || !KNOWN_FORMATS.has(name)) {
-    throw new Error(`Unknown format \`${name}\`; add it to KNOWN_FORMATS if @stoplight/spectral-formats exports it`);
+    throw new Error(`Unknown format \`${name}\`; add it to KNOWN_FORMATS if @openlint/openlint-formats exports it`);
   }
   return name;
 }
 
-// @stoplight/spectral-formats re-exports via tslib's __exportStar, which Node
+// @openlint/openlint-formats re-exports via tslib's __exportStar, which Node
 // cannot statically detect, so named ESM imports fail at runtime there. Bundlers
 // do detect them, and then hand back a namespace whose `default` is undefined.
 // Take the namespace and unwrap `default` only when it is there, the same way
 // ./shared does for the oas ruleset, so both loaders work.
 function formatsImport(names) {
   return [
-    `import * as spectralFormats from '@stoplight/spectral-formats';`,
-    `const { ${names.join(', ')} } = (spectralFormats as { default?: typeof spectralFormats }).default ?? spectralFormats;`,
+    `import * as openLintFormats from '@openlint/openlint-formats';`,
+    `const { ${names.join(', ')} } = (openLintFormats as { default?: typeof openLintFormats }).default ?? openLintFormats;`,
   ].join('\n');
 }
 
@@ -329,7 +329,7 @@ function generateFutureWarningsFile(v, warnings, sourceUrls) {
   }
 
   const imports = [
-    `import type { HumanReadableDiagnosticSeverity, RuleDefinition } from '@stoplight/spectral-core';`,
+    `import type { HumanReadableDiagnosticSeverity, RuleDefinition } from '@openlint/openlint-core';`,
   ];
   if (formats.size > 0) {
     const sorted = [...formats].sort();
@@ -337,7 +337,7 @@ function generateFutureWarningsFile(v, warnings, sourceUrls) {
   }
   if (functions.size > 0) {
     const sorted = [...functions].sort();
-    imports.push(`import { ${sorted.join(', ')} } from '@stoplight/spectral-functions';`);
+    imports.push(`import { ${sorted.join(', ')} } from '@openlint/openlint-functions';`);
   }
 
   const sourceList = sourceUrls.map(u => `//   - ${u}`).join('\n');
@@ -427,7 +427,7 @@ function generateVersionTs(v, yamlContent) {
   }
 
   const imports = [
-    `import type { RulesetDefinition } from '@stoplight/spectral-core';`,
+    `import type { RulesetDefinition } from '@openlint/openlint-core';`,
   ];
   if (formats.size > 0) {
     const sorted = [...formats].sort();
@@ -435,7 +435,7 @@ function generateVersionTs(v, yamlContent) {
   }
   if (functions.size > 0) {
     const sorted = [...functions].sort();
-    imports.push(`import { ${sorted.join(', ')} } from '@stoplight/spectral-functions';`);
+    imports.push(`import { ${sorted.join(', ')} } from '@openlint/openlint-functions';`);
   }
   imports.push(`import { oasValidationRules } from '../rules/oas-validation';`);
   if (v.warningsName) {

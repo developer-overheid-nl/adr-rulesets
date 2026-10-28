@@ -1,8 +1,8 @@
 // Auto-generated from https://gitdocumentatie.logius.nl/publicatie/api/adr/2.2.0/media/linter.yaml
 // Do not edit manually. Run `pnpm generate` to update.
 
-import type { RulesetDefinition } from '@stoplight/spectral-core';
-import { casing, or, pattern, schema, truthy } from '@stoplight/spectral-functions';
+import type { RulesetDefinition } from '@openlint/openlint-core';
+import { casing, or, pattern, schema, truthy } from '@openlint/openlint-functions';
 import { oasValidationRules } from '../rules/oas-validation';
 import { oasRuleset } from './shared';
 

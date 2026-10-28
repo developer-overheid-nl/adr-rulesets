@@ -1,4 +1,4 @@
-import type { RulesetDefinition } from "@stoplight/spectral-core";
+import type { RulesetDefinition } from "@openlint/openlint-core";
 import {
   ADR_20_URI,
   ADR_21_URI,

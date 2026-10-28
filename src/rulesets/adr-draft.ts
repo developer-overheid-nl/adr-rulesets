@@ -1,10 +1,10 @@
 // Auto-generated from https://logius-standaarden.github.io/API-Design-Rules/media/linter.yaml
 // Do not edit manually. Run `pnpm generate` to update.
 
-import type { RulesetDefinition } from '@stoplight/spectral-core';
-import * as spectralFormats from '@stoplight/spectral-formats';
-const { oas2, oas3 } = (spectralFormats as { default?: typeof spectralFormats }).default ?? spectralFormats;
-import { or, pattern, schema, truthy } from '@stoplight/spectral-functions';
+import type { RulesetDefinition } from '@openlint/openlint-core';
+import * as openLintFormats from '@openlint/openlint-formats';
+const { oas2, oas3 } = (openLintFormats as { default?: typeof openLintFormats }).default ?? openLintFormats;
+import { or, pattern, schema, truthy } from '@openlint/openlint-functions';
 import { oasValidationRules } from '../rules/oas-validation';
 import { oasRuleset } from './shared';
 

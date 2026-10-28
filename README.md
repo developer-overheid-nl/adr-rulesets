@@ -1,24 +1,26 @@
 # @developer-overheid-nl/adr-rulesets
 
-[Spectral](https://github.com/stoplightio/spectral) rulesets for the
+[OpenLint](https://github.com/openlint/openlint) rulesets for the
 [NL GOV API Design Rules](https://logius-standaarden.github.io/API-Design-Rules/) (ADR).
+OpenLint is the community fork of [Spectral](https://github.com/stoplightio/spectral) and
+reads the same ruleset format.
 
 ## Installation
 
 ```sh
-pnpm add @developer-overheid-nl/adr-rulesets @stoplight/spectral-core
+pnpm add @developer-overheid-nl/adr-rulesets @openlint/openlint-core
 ```
 
 ## Usage
 
 ```ts
-import { Spectral } from '@stoplight/spectral-core';
+import { OpenLint } from '@openlint/openlint-core';
 import { adr21 } from '@developer-overheid-nl/adr-rulesets';
 
-const spectral = new Spectral();
-spectral.setRuleset(adr21);
+const openLint = new OpenLint();
+openLint.setRuleset(adr21);
 
-const results = await spectral.run(openApiDocument);
+const results = await openLint.run(openApiDocument);
 ```
 
 Available rulesets:
