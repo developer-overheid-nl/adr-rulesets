@@ -2,8 +2,6 @@
 
 [OpenLint](https://github.com/openlint/openlint) rulesets for the
 [NL GOV API Design Rules](https://logius-standaarden.github.io/API-Design-Rules/) (ADR).
-OpenLint is the community fork of [Spectral](https://github.com/stoplightio/spectral) and
-reads the same ruleset format.
 
 ## Installation
 

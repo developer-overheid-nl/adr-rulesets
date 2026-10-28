@@ -60,7 +60,7 @@ const KNOWN_FUNCTIONS = new Set([
   'unreferencedReusableObject', 'xor',
 ]);
 
-// Format names OpenLint (like Spectral) resolves for YAML/JSON rulesets. In a JS ruleset the
+// Format names OpenLint resolves for YAML/JSON rulesets. In a JS ruleset the
 // `formats` entries have to be the actual Format functions, so we emit them as
 // identifiers imported from @openlint/openlint-formats.
 const KNOWN_FORMATS = new Set([

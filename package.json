@@ -1,7 +1,7 @@
 {
   "name": "@developer-overheid-nl/adr-rulesets",
   "version": "0.1.1",
-  "description": "OpenLint (Spectral-compatible) rulesets for the NL GOV API Design Rules (ADR)",
+  "description": "OpenLint rulesets for the NL GOV API Design Rules (ADR)",
   "packageManager": "pnpm@10.34.5",
   "type": "module",
   "license": "EUPL-1.2",
