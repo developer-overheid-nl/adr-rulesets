@@ -15,11 +15,11 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0
       '@openlint/openlint-functions':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: 0.2.0
       '@openlint/openlint-rulesets':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: 0.2.0
     devDependencies:
       '@changesets/cli':
         specifier: ^3.0.3
@@ -367,6 +367,10 @@ packages:
     resolution: {integrity: sha512-OF9qP4hdEaFSDSbF4RdcKsg4vbkkMcwWCtmuQwQ7QbSfR4p3DovHlNDQsL8Pwldcnnq8nwy+rLdhRyoUD6JsVg==}
     engines: {node: ^22.0 || >= 24.0}
 
+  '@openlint/openlint-functions@0.2.0':
+    resolution: {integrity: sha512-YfzOk5l0SiWKFTvjWxfiRY4MJWy1eO+uSRqQR57WmxJ8CgL/hsBDHJxKjN2QILAyYicCIJ4rXc/PUx1BgBNiwQ==}
+    engines: {node: ^22.0 || >= 24.0}
+
   '@openlint/openlint-parsers@1.0.0':
     resolution: {integrity: sha512-0SYhns4Plp8E6mttkPYz1IDtAUrAkVVU8ZicSsNoSN5UtMYrQMKOqoB2e6kzFl2UsLE300ZUvQ+RXS4FcF8gjA==}
     engines: {node: ^22.0 || >= 24.0}
@@ -375,12 +379,24 @@ packages:
     resolution: {integrity: sha512-3jURgH6Tm94fCAqhzWVbs3T5DQSBZUyi5EAG4gdMo5To42eNp4LcOv7ziUFt4Ac0AETer5O25bCLUXIUGCfj2g==}
     engines: {node: ^22.0 || >= 24.0}
 
-  '@openlint/openlint-rulesets@0.1.0':
-    resolution: {integrity: sha512-vXiDVMbkXCm/qcnoAvV9F7XWhZSS/P29Mg4T2zIYsA9fNBTzfNA53LcJYE8dVlFXJnuUxSqjsd4bNLFRzHGqSQ==}
+  '@openlint/openlint-rulesets@0.2.0':
+    resolution: {integrity: sha512-z8qYd8yCyno2WFFjQkB6VB6EdRXCGSzr4hTDCH9iz4fSGs0j5rprQwzke6Py/LI6aRDd5LX3CBkPsNHAsVOShQ==}
     engines: {node: ^22.0 || >= 24.0}
 
   '@openlint/openlint-runtime@0.0.1':
     resolution: {integrity: sha512-rClfFKhziayH/1TGEYzMJnwD+CiBRghYbWSANipHk6V/MQQlPrfyBH+alPuvwg6l/qsf6uNnXgpGthuxn/nQQw==}
+    engines: {node: ^22.0 || >= 24.0}
+
+  '@openlint/ruleset-spectral-arazzo@0.1.0':
+    resolution: {integrity: sha512-2I/dODb39FZ7AHRzJMQys4J0eZpvqNsQSzjZyLxreViD2QRc47OeIeC7m947vU+cHQVoPasG+BCryxu+9ZWbfg==}
+    engines: {node: ^22.0 || >= 24.0}
+
+  '@openlint/ruleset-spectral-asyncapi@0.1.0':
+    resolution: {integrity: sha512-wa+PFkQh39Wl6hKeYK9czuWqqnH82ChAvDK5coGNsxOxpwuYiDPrygrZUb5JiQyxx9b6jjF32Z8Cxi4bBgQV1w==}
+    engines: {node: ^22.0 || >= 24.0}
+
+  '@openlint/ruleset-spectral-oas@0.1.0':
+    resolution: {integrity: sha512-4bGML3ostvs+VZKV6ID+N1gA2xeI9oBlJPQivAJuQECUuSoiEexspNJjYaRShoTGj1n3p5f1ikDBd49ioO+jHQ==}
     engines: {node: ^22.0 || >= 24.0}
 
   '@oxc-project/types@0.122.0':
@@ -1749,6 +1765,22 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
+  '@openlint/openlint-functions@0.2.0':
+    dependencies:
+      '@openlint/openlint-core': 0.1.1
+      '@openlint/openlint-formats': 0.1.0
+      '@openlint/openlint-runtime': 0.0.1
+      '@stoplight/better-ajv-errors': 1.0.3(ajv@8.20.0)
+      '@stoplight/json': 3.21.7
+      ajv: 8.20.0
+      ajv-draft-04: 1.0.0(ajv@8.20.0)
+      ajv-errors: 3.0.0(ajv@8.20.0)
+      ajv-formats: 2.1.1(ajv@8.20.0)
+      lodash: 4.18.1
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - encoding
+
   '@openlint/openlint-parsers@1.0.0':
     dependencies:
       '@stoplight/json': 3.21.7
@@ -1766,23 +1798,11 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@openlint/openlint-rulesets@0.1.0':
+  '@openlint/openlint-rulesets@0.2.0':
     dependencies:
-      '@asyncapi/specs': 6.11.1
-      '@openlint/openlint-core': 0.1.1
-      '@openlint/openlint-formats': 0.1.0
-      '@openlint/openlint-functions': 0.1.0
-      '@openlint/openlint-runtime': 0.0.1
-      '@stoplight/better-ajv-errors': 1.0.3(ajv@8.20.0)
-      '@stoplight/json': 3.21.7
-      '@stoplight/types': 13.20.0
-      '@types/json-schema': 7.0.15
-      ajv: 8.20.0
-      ajv-formats: 2.1.1(ajv@8.20.0)
-      json-schema-traverse: 1.0.0
-      leven: 3.1.0
-      lodash: 4.18.1
-      tslib: 2.8.1
+      '@openlint/ruleset-spectral-arazzo': 0.1.0
+      '@openlint/ruleset-spectral-asyncapi': 0.1.0
+      '@openlint/ruleset-spectral-oas': 0.1.0
     transitivePeerDependencies:
       - encoding
 
@@ -1793,6 +1813,57 @@ snapshots:
       '@stoplight/types': 13.20.0
       lodash: 4.18.1
       node-fetch: 2.7.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@openlint/ruleset-spectral-arazzo@0.1.0':
+    dependencies:
+      '@openlint/openlint-core': 0.1.1
+      '@openlint/openlint-formats': 0.1.0
+      '@openlint/openlint-functions': 0.1.0
+      '@stoplight/json': 3.21.7
+      '@stoplight/types': 13.20.0
+      ajv: 8.20.0
+      leven: 3.1.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@openlint/ruleset-spectral-asyncapi@0.1.0':
+    dependencies:
+      '@asyncapi/specs': 6.11.1
+      '@openlint/openlint-core': 0.1.1
+      '@openlint/openlint-formats': 0.1.0
+      '@openlint/openlint-functions': 0.1.0
+      '@openlint/openlint-runtime': 0.0.1
+      '@stoplight/better-ajv-errors': 1.0.3(ajv@8.20.0)
+      '@stoplight/json': 3.21.7
+      '@stoplight/types': 13.20.0
+      ajv: 8.20.0
+      ajv-formats: 2.1.1(ajv@8.20.0)
+      immer: 9.0.21
+      json-schema-traverse: 1.0.0
+      leven: 3.1.0
+      lodash: 4.18.1
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@openlint/ruleset-spectral-oas@0.1.0':
+    dependencies:
+      '@openlint/openlint-core': 0.1.1
+      '@openlint/openlint-formats': 0.1.0
+      '@openlint/openlint-functions': 0.1.0
+      '@openlint/openlint-runtime': 0.0.1
+      '@stoplight/better-ajv-errors': 1.0.3(ajv@8.20.0)
+      '@stoplight/json': 3.21.7
+      '@stoplight/types': 13.20.0
+      ajv: 8.20.0
+      ajv-formats: 2.1.1(ajv@8.20.0)
+      json-schema-traverse: 1.0.0
+      leven: 3.1.0
+      lodash: 4.18.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - encoding

@@ -82,8 +82,8 @@ function formatIdentifier(name) {
 // @openlint/openlint-formats re-exports via tslib's __exportStar, which Node
 // cannot statically detect, so named ESM imports fail at runtime there. Bundlers
 // do detect them, and then hand back a namespace whose `default` is undefined.
-// Take the namespace and unwrap `default` only when it is there, the same way
-// ./shared does for the oas ruleset, so both loaders work.
+// Take the namespace and unwrap `default` only when it is there, so both
+// loaders work.
 function formatsImport(names) {
   return [
     `import * as openLintFormats from '@openlint/openlint-formats';`,

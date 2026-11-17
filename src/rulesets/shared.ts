@@ -1,4 +1,4 @@
 import type { RulesetDefinition } from '@openlint/openlint-core';
-import oasModule from '@openlint/openlint-rulesets/dist/oas/index.js';
+import { oas } from '@openlint/openlint-rulesets';
 
-export const oasRuleset = ((oasModule as { default?: RulesetDefinition }).default ?? oasModule) as RulesetDefinition;
+export const oasRuleset = oas as RulesetDefinition;
