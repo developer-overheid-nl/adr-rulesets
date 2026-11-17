@@ -363,10 +363,6 @@ packages:
     resolution: {integrity: sha512-JTOIU0/3vsWtpGZh1tWxZf8APE9xhMSJ/JuJ2wKEJD8MNXXLJbWHkA2HnjnNDG6nb9D10xPJqDhnTX/WtWl3UA==}
     engines: {node: ^22.0 || >= 24.0}
 
-  '@openlint/openlint-functions@0.1.0':
-    resolution: {integrity: sha512-OF9qP4hdEaFSDSbF4RdcKsg4vbkkMcwWCtmuQwQ7QbSfR4p3DovHlNDQsL8Pwldcnnq8nwy+rLdhRyoUD6JsVg==}
-    engines: {node: ^22.0 || >= 24.0}
-
   '@openlint/openlint-functions@0.2.0':
     resolution: {integrity: sha512-YfzOk5l0SiWKFTvjWxfiRY4MJWy1eO+uSRqQR57WmxJ8CgL/hsBDHJxKjN2QILAyYicCIJ4rXc/PUx1BgBNiwQ==}
     engines: {node: ^22.0 || >= 24.0}
@@ -1749,22 +1745,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@openlint/openlint-functions@0.1.0':
-    dependencies:
-      '@openlint/openlint-core': 0.1.1
-      '@openlint/openlint-formats': 0.1.0
-      '@openlint/openlint-runtime': 0.0.1
-      '@stoplight/better-ajv-errors': 1.0.3(ajv@8.20.0)
-      '@stoplight/json': 3.21.7
-      ajv: 8.20.0
-      ajv-draft-04: 1.0.0(ajv@8.20.0)
-      ajv-errors: 3.0.0(ajv@8.20.0)
-      ajv-formats: 2.1.1(ajv@8.20.0)
-      lodash: 4.18.1
-      tslib: 2.8.1
-    transitivePeerDependencies:
-      - encoding
-
   '@openlint/openlint-functions@0.2.0':
     dependencies:
       '@openlint/openlint-core': 0.1.1
@@ -1821,7 +1801,7 @@ snapshots:
     dependencies:
       '@openlint/openlint-core': 0.1.1
       '@openlint/openlint-formats': 0.1.0
-      '@openlint/openlint-functions': 0.1.0
+      '@openlint/openlint-functions': 0.2.0
       '@stoplight/json': 3.21.7
       '@stoplight/types': 13.20.0
       ajv: 8.20.0
@@ -1835,7 +1815,7 @@ snapshots:
       '@asyncapi/specs': 6.11.1
       '@openlint/openlint-core': 0.1.1
       '@openlint/openlint-formats': 0.1.0
-      '@openlint/openlint-functions': 0.1.0
+      '@openlint/openlint-functions': 0.2.0
       '@openlint/openlint-runtime': 0.0.1
       '@stoplight/better-ajv-errors': 1.0.3(ajv@8.20.0)
       '@stoplight/json': 3.21.7
@@ -1854,7 +1834,7 @@ snapshots:
     dependencies:
       '@openlint/openlint-core': 0.1.1
       '@openlint/openlint-formats': 0.1.0
-      '@openlint/openlint-functions': 0.1.0
+      '@openlint/openlint-functions': 0.2.0
       '@openlint/openlint-runtime': 0.0.1
       '@stoplight/better-ajv-errors': 1.0.3(ajv@8.20.0)
       '@stoplight/json': 3.21.7
