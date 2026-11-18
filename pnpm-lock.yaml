@@ -18,8 +18,8 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@openlint/openlint-rulesets':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.3.0
+        version: 0.3.0
     devDependencies:
       '@changesets/cli':
         specifier: ^3.0.3
@@ -375,24 +375,24 @@ packages:
     resolution: {integrity: sha512-3jURgH6Tm94fCAqhzWVbs3T5DQSBZUyi5EAG4gdMo5To42eNp4LcOv7ziUFt4Ac0AETer5O25bCLUXIUGCfj2g==}
     engines: {node: ^22.0 || >= 24.0}
 
-  '@openlint/openlint-rulesets@0.2.0':
-    resolution: {integrity: sha512-z8qYd8yCyno2WFFjQkB6VB6EdRXCGSzr4hTDCH9iz4fSGs0j5rprQwzke6Py/LI6aRDd5LX3CBkPsNHAsVOShQ==}
+  '@openlint/openlint-rulesets@0.3.0':
+    resolution: {integrity: sha512-ZY57VQ4EAfuTe8oyXybCLlz8Kret+RATQN6QimZ1gu9ftLoGEi/LyXfD5n+PSDiSbxDyexI4WEDbQA2aWm7bUA==}
     engines: {node: ^22.0 || >= 24.0}
 
   '@openlint/openlint-runtime@0.0.1':
     resolution: {integrity: sha512-rClfFKhziayH/1TGEYzMJnwD+CiBRghYbWSANipHk6V/MQQlPrfyBH+alPuvwg6l/qsf6uNnXgpGthuxn/nQQw==}
     engines: {node: ^22.0 || >= 24.0}
 
-  '@openlint/ruleset-spectral-arazzo@0.1.0':
-    resolution: {integrity: sha512-2I/dODb39FZ7AHRzJMQys4J0eZpvqNsQSzjZyLxreViD2QRc47OeIeC7m947vU+cHQVoPasG+BCryxu+9ZWbfg==}
+  '@openlint/ruleset-spectral-arazzo@1.0.0':
+    resolution: {integrity: sha512-7CJOvsynjM2GMcTIEwE8vtpCfcPOuNIz7nUJPbhlfcQV9Q/yUtneeRp3rkYKTrkiYHWDCuIgE5HphvtAK7yBCQ==}
     engines: {node: ^22.0 || >= 24.0}
 
-  '@openlint/ruleset-spectral-asyncapi@0.1.0':
-    resolution: {integrity: sha512-wa+PFkQh39Wl6hKeYK9czuWqqnH82ChAvDK5coGNsxOxpwuYiDPrygrZUb5JiQyxx9b6jjF32Z8Cxi4bBgQV1w==}
+  '@openlint/ruleset-spectral-asyncapi@1.0.0':
+    resolution: {integrity: sha512-WRieNp5gCpSF5Ght2UPJt2pdh3Z7cvvYHu59NmQ8sB3RANz7h9rxX2nUTY0MDxwjCXZnqKAQC/X+IFAJoPCxWQ==}
     engines: {node: ^22.0 || >= 24.0}
 
-  '@openlint/ruleset-spectral-oas@0.1.0':
-    resolution: {integrity: sha512-4bGML3ostvs+VZKV6ID+N1gA2xeI9oBlJPQivAJuQECUuSoiEexspNJjYaRShoTGj1n3p5f1ikDBd49ioO+jHQ==}
+  '@openlint/ruleset-spectral-oas@1.0.0':
+    resolution: {integrity: sha512-HVU6Uvdjm83ko00jRbXN1SI7X4PR3HsVbvs/DloKNyIfVWT7cHwTCyoX2QigvyJOkCuS2KVXEBDfc5dkJkG0Hg==}
     engines: {node: ^22.0 || >= 24.0}
 
   '@oxc-project/types@0.122.0':
@@ -1778,11 +1778,11 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@openlint/openlint-rulesets@0.2.0':
+  '@openlint/openlint-rulesets@0.3.0':
     dependencies:
-      '@openlint/ruleset-spectral-arazzo': 0.1.0
-      '@openlint/ruleset-spectral-asyncapi': 0.1.0
-      '@openlint/ruleset-spectral-oas': 0.1.0
+      '@openlint/ruleset-spectral-arazzo': 1.0.0
+      '@openlint/ruleset-spectral-asyncapi': 1.0.0
+      '@openlint/ruleset-spectral-oas': 1.0.0
     transitivePeerDependencies:
       - encoding
 
@@ -1797,7 +1797,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@openlint/ruleset-spectral-arazzo@0.1.0':
+  '@openlint/ruleset-spectral-arazzo@1.0.0':
     dependencies:
       '@openlint/openlint-core': 0.1.1
       '@openlint/openlint-formats': 0.1.0
@@ -1810,7 +1810,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@openlint/ruleset-spectral-asyncapi@0.1.0':
+  '@openlint/ruleset-spectral-asyncapi@1.0.0':
     dependencies:
       '@asyncapi/specs': 6.11.1
       '@openlint/openlint-core': 0.1.1
@@ -1830,7 +1830,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@openlint/ruleset-spectral-oas@0.1.0':
+  '@openlint/ruleset-spectral-oas@1.0.0':
     dependencies:
       '@openlint/openlint-core': 0.1.1
       '@openlint/openlint-formats': 0.1.0
