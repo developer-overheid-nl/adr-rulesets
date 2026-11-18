@@ -86,8 +86,8 @@
   "dependencies": {
     "@openlint/openlint-core": "^0.1.1",
     "@openlint/openlint-formats": "^0.1.0",
-    "@openlint/openlint-functions": "^0.1.0",
-    "@openlint/openlint-rulesets": "^0.1.0"
+    "@openlint/openlint-functions": "^0.2.0",
+    "@openlint/openlint-rulesets": "^0.2.0"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
