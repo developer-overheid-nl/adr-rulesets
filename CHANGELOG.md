@@ -1,5 +1,16 @@
 # @developer-overheid-nl/adr-rulesets
 
+## 0.2.1
+
+### Patch Changes
+
+- 0610b62: Update `@openlint/openlint-rulesets` and `@openlint/openlint-functions` to `^0.2.0`. The OAS ruleset is now imported through
+  the package's public `oas` export instead of the `dist/oas/index.js` deep path, which 0.2.0 no longer ships. The rulesets
+  produce the same results.
+- 6ec44c1: Update `@openlint/openlint-rulesets` to `^0.3.0`. It depends on the 1.0 releases of `@openlint/ruleset-spectral-oas`,
+  `-arazzo` and `-asyncapi`, the versions the next `@geonovum/standards-checker` release depends on, so a consumer of both
+  packages, such as don-checker, installs one copy of the OAS ruleset instead of two. The rulesets produce the same results.
+
 ## 0.2.0
 
 ### Minor Changes
