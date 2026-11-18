@@ -61,11 +61,42 @@ pnpm build
 
 ## Releasing
 
-Releases use [changesets](https://github.com/changesets/changesets) for versioning and the changelog.
+Versioning, the changelog, and npm publishing are driven by [Changesets](https://changesets.dev/). Describing a change is decoupled from cutting a release:
 
-1. For every user-facing change, add a changeset in the PR: `pnpm changeset` (choose patch/minor/major and describe the change).
-2. To release, check what version the open changesets add up to (`pnpm changeset status --verbose`), then tag the latest commit on `main` with it and push the tag: `git tag v0.1.1 && git push origin v0.1.1`.
-3. The [Publish workflow](.github/workflows/publish.yml) applies the changesets, checks that the resulting version matches the tag, builds and publishes to npm with provenance. It then commits the version bump and `CHANGELOG.md` back to `main` and moves the tag onto that commit. Prerelease versions (e.g. `1.0.0-beta.1`) go to the `beta` dist-tag.
+1. **Add a changeset with your change.** Run `pnpm changeset`, pick the bump (`major` / `minor` / `patch`), and write a one-line summary. This creates a `.changeset/<name>.md` file; commit it with your PR. Omit only for changes that don't affect the published package (CI, internal docs).
+
+2. **Merge the version pull request.** Every push to `main` runs the [Release workflow](.github/workflows/publish.yml). While changesets are pending, it opens or updates a `chore(release): version packages` pull request that runs `pnpm version-packages`: it consumes the pending `.changeset/*.md` files, bumps `package.json` to the computed version (the highest pending bump wins), and prepends the summaries to `CHANGELOG.md`. Review that pull request and merge it when you want to release. Don't hand-edit the `version` field; Changesets owns it.
+
+   GitHub doesn't run the CI workflow on pull requests opened by the workflow token, so the version pull request shows no checks. The release job builds and lints before it publishes anyway; close and reopen the pull request if you want the checks on it.
+
+3. **Publish.** When the version pull request lands on `main`, the workflow finds a `package.json` version that has no `v<version>` tag yet. It builds and lints, publishes to npm with provenance, and creates the `v<version>` tag with a GitHub release whose notes are that version's `CHANGELOG.md` section. Starting the workflow by hand (**Actions** → **Release** → **Run workflow** on `main`) does the same as a push.
+
+   To retry a failed release, use **Re-run failed jobs**. Steps that already completed (the npm publish, the GitHub release) are skipped.
+
+   `pnpm release` (`pnpm build && changeset publish`) publishes to npm locally if you need to bypass the workflow (it creates no GitHub release).
+
+### Pre-releases
+
+To publish `-beta.N` prereleases before a final release, enter Changesets pre-release mode in a pull request:
+
+```sh
+pnpm changeset pre enter beta   # writes .changeset/pre.json; commit it
+```
+
+While in pre mode:
+
+- The version pull request (titled `... (beta)`) computes e.g. `1.0.0-beta.0`; once new changesets land after a release, it bumps to `-beta.1`, and so on. Final releases are blocked until you exit pre mode.
+- Merging it publishes the prerelease under the npm dist-tag `beta`, so `latest` keeps pointing at the last final release, and marks the GitHub release as a pre-release.
+- Consumed changesets are **moved** to `.changeset/pre/` instead of deleted, so the final release's changelog can aggregate them. Don't delete them by hand.
+- The `-beta.N` counter is derived from the current `package.json` version, one more reason never to hand-edit `version`; a hand-set version shifts the counter.
+
+When the release is ready to go final, exit pre mode in a pull request:
+
+```sh
+pnpm changeset pre exit         # marks pre mode as exiting in .changeset/pre.json; commit it
+```
+
+After it merges, the version pull request computes the final version and cleans up the consumed changesets. Merging that publishes under `latest`.
 
 ## License
 
